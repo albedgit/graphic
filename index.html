@@ -21,6 +21,47 @@
         // Data embedded directly into the HTML
         const data = [
     {
+        "name": "-N/A",
+        "data": [
+            {
+                "name": "Mktliq 12/31/2049",
+                "value": 0.005896
+            },
+            {
+                "name": "Yuan Renminbi",
+                "value": 0.0025892
+            },
+            {
+                "name": "Slbbh1142",
+                "value": 0.002279
+            },
+            {
+                "name": "United Parcel Service Inc Class B",
+                "value": 0.0011181
+            },
+            {
+                "name": "Air Liquide(L')",
+                "value": 0.0007909
+            },
+            {
+                "name": "L'Oreal",
+                "value": 0.0007544
+            },
+            {
+                "name": "Us Dollar",
+                "value": 0.0005315
+            },
+            {
+                "name": "Ferguson PLC",
+                "value": 0.0005278
+            },
+            {
+                "name": "3i Group Ord",
+                "value": 0.0004404
+            }
+        ]
+    },
+    {
         "name": "Australia",
         "data": [
             {
@@ -2147,7 +2188,12 @@
                         bubblePadding: 10 // Adjust padding to ensure fit on screen
                     },
                     dataLabels: {
-                        enabled: false
+                        enabled: true,
+                        format: '{point.name}: {point.value:.2f}%',
+                        style: {
+                            color: 'black',
+                            textOutline: 'none',
+                            fontWeight: 'normal'
                         }
                     },
                     boostThreshold: 1 // Apply boost module to improve performance
