@@ -10,6 +10,7 @@
     <script src="https://code.highcharts.com/modules/exporting.js"></script>
     <script src="https://code.highcharts.com/modules/export-data.js"></script>
     <script src="https://code.highcharts.com/modules/accessibility.js"></script>
+    <script src="https://code.highcharts.com/modules/boost.js"></script> <!-- Boost module for performance -->
 </head>
 <body>
     <!-- Container for the chart -->
@@ -20,11 +21,16 @@
         fetch('data_with_weight.json')
             .then(response => response.json())
             .then(data => {
-                // Initialize the Highcharts packed bubble chart
+                // Initialize the Highcharts packed bubble chart with performance optimizations
                 Highcharts.chart('container', {
                     chart: {
                         type: 'packedbubble',
-                        height: '100%'
+                        height: '100%',
+                        animation: false, // Disable animations for performance
+                        boost: {
+                            useGPUTranslations: true, // Use GPU for rendering
+                            seriesThreshold: 1, // Apply boost from the first series
+                        }
                     },
                     title: {
                         text: 'Company Weightings by Country'
@@ -44,7 +50,7 @@
                             zMax: Math.max(...data.flatMap(series => series.data.map(point => point.value))),
                             layoutAlgorithm: {
                                 gravitationalConstant: 0.05,
-                                splitSeries: false, // Set to false for a traditional packed bubble chart
+                                splitSeries: false,
                                 seriesInteraction: true,
                                 dragBetweenSeries: false,
                                 parentNodeLimit: true,
@@ -58,7 +64,8 @@
                                     textOutline: 'none',
                                     fontWeight: 'normal'
                                 }
-                            }
+                            },
+                            boostThreshold: 1 // Apply boost module to improve performance
                         }
                     },
                     series: data
