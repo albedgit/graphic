@@ -29,6 +29,9 @@
                     title: {
                         text: 'Company Weightings by Country'
                     },
+                    legend: {
+                        enabled: false // Disable the legend
+                    },
                     tooltip: {
                         useHTML: true,
                         pointFormat: '<b>{point.name}:</b> {point.value}'
@@ -44,16 +47,12 @@
                                 splitSeries: false, // Set to false for a traditional packed bubble chart
                                 seriesInteraction: true,
                                 dragBetweenSeries: false,
-                                parentNodeLimit: true
+                                parentNodeLimit: true,
+                                bubblePadding: 10 // Adjust padding to ensure fit on screen
                             },
                             dataLabels: {
                                 enabled: true,
                                 format: '{point.name}',
-                                filter: {
-                                    property: 'y',
-                                    operator: '>',
-                                    value: 0.002
-                                },
                                 style: {
                                     color: 'black',
                                     textOutline: 'none',
