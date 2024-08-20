@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Packed Bubble Chart with Async Data</title>
+    <title>Packed Bubble Chart with Weighted Data</title>
     <!-- Highcharts library -->
     <script src="https://code.highcharts.com/highcharts.js"></script>
     <script src="https://code.highcharts.com/highcharts-more.js"></script>
@@ -17,7 +17,7 @@
 
     <script>
         // Load data asynchronously
-        fetch('data.json')
+        fetch('data_with_weight.json')
             .then(response => response.json())
             .then(data => {
                 // Initialize the Highcharts chart with the fetched data
@@ -35,12 +35,12 @@
                     },
                     plotOptions: {
                         packedbubble: {
-                            minSize: '30%',
-                            maxSize: '120%',
+                            minSize: '10%',
+                            maxSize: '100%',
                             zMin: 0,
-                            zMax: 1000,
+                            zMax: Math.max(...data.flatMap(series => series.data.map(point => point.value))),
                             layoutAlgorithm: {
-                                gravitationalConstant: 0.0,
+                                gravitationalConstant: 0.05,
                                 splitSeries: true,
                                 seriesInteraction: false,
                                 dragBetweenSeries: true,
@@ -52,7 +52,7 @@
                                 filter: {
                                     property: 'y',
                                     operator: '>',
-                                    value: 250
+                                    value: 0.002
                                 },
                                 style: {
                                     color: 'black',
