@@ -1,9 +1,10 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Packed Bubble Chart with Weighted Data</title>
+    <title>Packed Bubble Chart with Top 500 Companies</title>
     <!-- Highcharts library -->
     <script src="https://code.highcharts.com/highcharts.js"></script>
     <script src="https://code.highcharts.com/highcharts-more.js"></script>
@@ -17,61 +18,2189 @@
     <div id="container" style="width: 100%; height: 100vh;"></div>
 
     <script>
-        // Load data asynchronously
-        fetch('data_with_weight.json')
-            .then(response => response.json())
-            .then(data => {
-                // Initialize the Highcharts packed bubble chart with performance optimizations
-                Highcharts.chart('container', {
-                    chart: {
-                        type: 'packedbubble',
-                        height: '100%',
-                        animation: false, // Disable animations for performance
-                        boost: {
-                            useGPUTranslations: true, // Use GPU for rendering
-                            seriesThreshold: 1, // Apply boost from the first series
+        // Data embedded directly into the HTML
+        const data = [
+    {
+        "name": "-N/A",
+        "data": [
+            {
+                "name": "Mktliq 12/31/2049",
+                "value": 0.005896
+            },
+            {
+                "name": "Yuan Renminbi",
+                "value": 0.0025892
+            },
+            {
+                "name": "Slbbh1142",
+                "value": 0.002279
+            },
+            {
+                "name": "United Parcel Service Inc Class B",
+                "value": 0.0011181
+            },
+            {
+                "name": "Air Liquide(L')",
+                "value": 0.0007909
+            },
+            {
+                "name": "L'Oreal",
+                "value": 0.0007544
+            },
+            {
+                "name": "Us Dollar",
+                "value": 0.0005315
+            },
+            {
+                "name": "Ferguson PLC",
+                "value": 0.0005278
+            },
+            {
+                "name": "3i Group Ord",
+                "value": 0.0004404
+            }
+        ]
+    },
+    {
+        "name": "Australia",
+        "data": [
+            {
+                "name": "Commonwealth Bank of Australia",
+                "value": 0.0017738
+            },
+            {
+                "name": "BHP Group Ltd",
+                "value": 0.0016497
+            },
+            {
+                "name": "CSL Ltd",
+                "value": 0.0011523
+            },
+            {
+                "name": "National Australia Bank Ltd",
+                "value": 0.0009255
+            },
+            {
+                "name": "Westpac Banking Corp",
+                "value": 0.0007939
+            },
+            {
+                "name": "ANZ Group Holdings Ltd",
+                "value": 0.0006679
+            },
+            {
+                "name": "Wesfarmers Ltd",
+                "value": 0.0006405
+            },
+            {
+                "name": "Macquarie Group Ltd",
+                "value": 0.0005849
+            },
+            {
+                "name": "Goodman Group",
+                "value": 0.0005056
+            },
+            {
+                "name": "Woodside Energy Group Ltd",
+                "value": 0.0004034
+            }
+        ]
+    },
+    {
+        "name": "Belgium",
+        "data": [
+            {
+                "name": "Anheuser-Busch InBev SA/NV",
+                "value": 0.0006161
+            },
+            {
+                "name": "argenx SE",
+                "value": 0.0003589
+            }
+        ]
+    },
+    {
+        "name": "Brazil",
+        "data": [
+            {
+                "name": "Nu Holdings Ltd Ordinary Shares Class A",
+                "value": 0.0004543
+            },
+            {
+                "name": "Vale SA",
+                "value": 0.0004491
+            },
+            {
+                "name": "Petroleo Brasileiro SA Petrobras Participating Preferred",
+                "value": 0.0003709
+            }
+        ]
+    },
+    {
+        "name": "Canada",
+        "data": [
+            {
+                "name": "Royal Bank of Canada",
+                "value": 0.0018499
+            },
+            {
+                "name": "The Toronto-Dominion Bank",
+                "value": 0.0012225
+            },
+            {
+                "name": "Enbridge Inc",
+                "value": 0.0009314
+            },
+            {
+                "name": "Canadian Pacific Kansas City Ltd",
+                "value": 0.0009188
+            },
+            {
+                "name": "Canadian Natural Resources Ltd",
+                "value": 0.0008737
+            },
+            {
+                "name": "Shopify Inc Registered Shs -A- Subord Vtg",
+                "value": 0.00087
+            },
+            {
+                "name": "Brookfield Corp Registered Shs -A- Limited Vtg",
+                "value": 0.0008544
+            },
+            {
+                "name": "Canadian National Railway Co",
+                "value": 0.0007644
+            },
+            {
+                "name": "Constellation Software Inc",
+                "value": 0.0007361
+            },
+            {
+                "name": "Bank of Montreal",
+                "value": 0.0007151
+            },
+            {
+                "name": "Bank of Nova Scotia",
+                "value": 0.0006674
+            },
+            {
+                "name": "Suncor Energy Inc",
+                "value": 0.0006111
+            },
+            {
+                "name": "Manulife Financial Corp",
+                "value": 0.0005666
+            },
+            {
+                "name": "Canadian Imperial Bank of Commerce",
+                "value": 0.0005645
+            },
+            {
+                "name": "Alimentation Couche-Tard Inc",
+                "value": 0.0005261
+            },
+            {
+                "name": "TC Energy Corp",
+                "value": 0.0005148
+            },
+            {
+                "name": "Agnico Eagle Mines Ltd",
+                "value": 0.0004515
+            },
+            {
+                "name": "Barrick Gold Corp",
+                "value": 0.000384
+            },
+            {
+                "name": "Intact Financial Corp",
+                "value": 0.0003835
+            }
+        ]
+    },
+    {
+        "name": "China",
+        "data": [
+            {
+                "name": "Tencent Holdings Ltd",
+                "value": 0.0034102
+            },
+            {
+                "name": "Alibaba Group Holding Ltd Ordinary Shares",
+                "value": 0.001966
+            },
+            {
+                "name": "PDD Holdings Inc ADR",
+                "value": 0.0010721
+            },
+            {
+                "name": "Meituan Class B",
+                "value": 0.0008701
+            },
+            {
+                "name": "China Construction Bank Corp Class H",
+                "value": 0.0007611
+            },
+            {
+                "name": "Industrial And Commercial Bank Of China Ltd Class H",
+                "value": 0.000506
+            },
+            {
+                "name": "Bank Of China Ltd Class H",
+                "value": 0.0004314
+            },
+            {
+                "name": "NetEase Inc Ordinary Shares",
+                "value": 0.0003918
+            },
+            {
+                "name": "Xiaomi Corp Class B",
+                "value": 0.0003727
+            },
+            {
+                "name": "JD.com Inc Ordinary Shares - Class A",
+                "value": 0.0003702
+            }
+        ]
+    },
+    {
+        "name": "Denmark",
+        "data": [
+            {
+                "name": "Novo Nordisk A/S Class B",
+                "value": 0.0047718
+            },
+            {
+                "name": "DSV AS",
+                "value": 0.0003668
+            }
+        ]
+    },
+    {
+        "name": "Finland",
+        "data": [
+            {
+                "name": "Nordea Bank Abp",
+                "value": 0.0004588
+            }
+        ]
+    },
+    {
+        "name": "France",
+        "data": [
+            {
+                "name": "Lvmh Moet Hennessy Louis Vuitton SE",
+                "value": 0.002042
+            },
+            {
+                "name": "TotalEnergies SE",
+                "value": 0.0015967
+            },
+            {
+                "name": "Schneider Electric SE",
+                "value": 0.0015094
+            },
+            {
+                "name": "Sanofi SA",
+                "value": 0.0013351
+            },
+            {
+                "name": "Airbus SE",
+                "value": 0.0010445
+            },
+            {
+                "name": "Safran SA",
+                "value": 0.0008756
+            },
+            {
+                "name": "Hermes International SA",
+                "value": 0.0008706
+            },
+            {
+                "name": "Essilorluxottica",
+                "value": 0.0008208
+            },
+            {
+                "name": "BNP Paribas Act. Cat.A",
+                "value": 0.0008083
+            },
+            {
+                "name": "AXA SA",
+                "value": 0.0007375
+            },
+            {
+                "name": "Vinci SA",
+                "value": 0.000662
+            },
+            {
+                "name": "Danone SA",
+                "value": 0.0004766
+            },
+            {
+                "name": "Compagnie de Saint-Gobain SA",
+                "value": 0.0004739
+            },
+            {
+                "name": "Air Liquide SA",
+                "value": 0.0004218
+            },
+            {
+                "name": "L'Oreal SA",
+                "value": 0.0004187
+            },
+            {
+                "name": "Capgemini SE",
+                "value": 0.0003791
+            }
+        ]
+    },
+    {
+        "name": "Germany",
+        "data": [
+            {
+                "name": "SAP SE",
+                "value": 0.0027326
+            },
+            {
+                "name": "Siemens AG",
+                "value": 0.0015992
+            },
+            {
+                "name": "Allianz SE",
+                "value": 0.0012916
+            },
+            {
+                "name": "Deutsche Telekom AG",
+                "value": 0.0010258
+            },
+            {
+                "name": "Munchener Ruckversicherungs-Gesellschaft AG",
+                "value": 0.0007663
+            },
+            {
+                "name": "Mercedes-Benz Group AG",
+                "value": 0.0006489
+            },
+            {
+                "name": "Infineon Technologies AG",
+                "value": 0.0005329
+            },
+            {
+                "name": "DHL Group",
+                "value": 0.0005187
+            },
+            {
+                "name": "adidas AG",
+                "value": 0.0004884
+            },
+            {
+                "name": "Basf SE",
+                "value": 0.0004865
+            },
+            {
+                "name": "Deutsche Boerse AG",
+                "value": 0.0004468
+            },
+            {
+                "name": "E.ON SE",
+                "value": 0.0003652
+            },
+            {
+                "name": "Deutsche Bank AG",
+                "value": 0.0003595
+            }
+        ]
+    },
+    {
+        "name": "Hong Kong",
+        "data": [
+            {
+                "name": "AIA Group Ltd",
+                "value": 0.000888
+            },
+            {
+                "name": "Hong Kong Exchanges and Clearing Ltd",
+                "value": 0.0004437
+            }
+        ]
+    },
+    {
+        "name": "India",
+        "data": [
+            {
+                "name": "HDFC Bank Ltd",
+                "value": 0.0012806
+            },
+            {
+                "name": "Reliance Industries Ltd",
+                "value": 0.00113
+            },
+            {
+                "name": "Infosys Ltd",
+                "value": 0.0007191
+            },
+            {
+                "name": "Tata Consultancy Services Ltd",
+                "value": 0.0006396
+            },
+            {
+                "name": "Bharti Airtel Ltd",
+                "value": 0.0005467
+            },
+            {
+                "name": "ICICI Bank Ltd",
+                "value": 0.0005425
+            },
+            {
+                "name": "Mahindra & Mahindra Ltd",
+                "value": 0.0003982
+            },
+            {
+                "name": "Axis Bank Ltd",
+                "value": 0.0003772
+            },
+            {
+                "name": "Larsen & Toubro Ltd",
+                "value": 0.0003612
+            }
+        ]
+    },
+    {
+        "name": "Indonesia",
+        "data": [
+            {
+                "name": "PT Bank Central Asia Tbk",
+                "value": 0.0004113
+            }
+        ]
+    },
+    {
+        "name": "Italy",
+        "data": [
+            {
+                "name": "UniCredit SpA",
+                "value": 0.0007887
+            },
+            {
+                "name": "Intesa Sanpaolo",
+                "value": 0.0007681
+            },
+            {
+                "name": "Enel SpA",
+                "value": 0.0006517
+            },
+            {
+                "name": "Ferrari NV",
+                "value": 0.0005695
+            },
+            {
+                "name": "Eni SpA",
+                "value": 0.0004227
+            },
+            {
+                "name": "Stellantis NV",
+                "value": 0.0004046
+            },
+            {
+                "name": "Generali",
+                "value": 0.000379
+            }
+        ]
+    },
+    {
+        "name": "Japan",
+        "data": [
+            {
+                "name": "Toyota Motor Corp",
+                "value": 0.0026762
+            },
+            {
+                "name": "Mitsubishi UFJ Financial Group Inc",
+                "value": 0.0014729
+            },
+            {
+                "name": "Sony Group Corp",
+                "value": 0.0012525
+            },
+            {
+                "name": "Hitachi Ltd",
+                "value": 0.0011309
+            },
+            {
+                "name": "Tokyo Electron Ltd",
+                "value": 0.0010832
+            },
+            {
+                "name": "Sumitomo Mitsui Financial Group Inc",
+                "value": 0.0010589
+            },
+            {
+                "name": "Keyence Corp",
+                "value": 0.0010185
+            },
+            {
+                "name": "Shin-Etsu Chemical Co Ltd",
+                "value": 0.000996
+            },
+            {
+                "name": "Recruit Holdings Co Ltd",
+                "value": 0.0009544
+            },
+            {
+                "name": "Mitsubishi Corp",
+                "value": 0.0009134
+            },
+            {
+                "name": "Daiichi Sankyo Co Ltd",
+                "value": 0.0009024
+            },
+            {
+                "name": "Tokio Marine Holdings Inc",
+                "value": 0.0008776
+            },
+            {
+                "name": "ITOCHU Corp",
+                "value": 0.0008162
+            },
+            {
+                "name": "SoftBank Group Corp",
+                "value": 0.0007043
+            },
+            {
+                "name": "Mizuho Financial Group Inc",
+                "value": 0.0006815
+            },
+            {
+                "name": "Mitsui & Co Ltd",
+                "value": 0.0006806
+            },
+            {
+                "name": "Nintendo Co Ltd",
+                "value": 0.0006774
+            },
+            {
+                "name": "Honda Motor Co Ltd",
+                "value": 0.0006008
+            },
+            {
+                "name": "KDDI Corp",
+                "value": 0.0005455
+            },
+            {
+                "name": "Hoya Corp",
+                "value": 0.0005164
+            },
+            {
+                "name": "Fast Retailing Co Ltd",
+                "value": 0.0005118
+            },
+            {
+                "name": "Takeda Pharmaceutical Co Ltd",
+                "value": 0.0005031
+            },
+            {
+                "name": "Daikin Industries Ltd",
+                "value": 0.0004574
+            },
+            {
+                "name": "Murata Manufacturing Co Ltd",
+                "value": 0.0004496
+            },
+            {
+                "name": "Mitsubishi Heavy Industries Ltd",
+                "value": 0.0004204
+            },
+            {
+                "name": "SoftBank Corp",
+                "value": 0.0004151
+            },
+            {
+                "name": "Japan Tobacco Inc",
+                "value": 0.0004055
+            },
+            {
+                "name": "Denso Corp",
+                "value": 0.0003958
+            },
+            {
+                "name": "Advantest Corp",
+                "value": 0.0003858
+            },
+            {
+                "name": "Mitsubishi Electric Corp",
+                "value": 0.0003831
+            },
+            {
+                "name": "MS&AD Insurance Group Holdings Inc",
+                "value": 0.0003782
+            },
+            {
+                "name": "Oriental Land Co Ltd",
+                "value": 0.0003637
+            },
+            {
+                "name": "Marubeni Corp",
+                "value": 0.0003564
+            },
+            {
+                "name": "Fujitsu Ltd",
+                "value": 0.000356
+            },
+            {
+                "name": "Nippon Telegraph & Telephone Corp",
+                "value": 0.0003515
+            }
+        ]
+    },
+    {
+        "name": "Netherlands",
+        "data": [
+            {
+                "name": "ASML Holding NV",
+                "value": 0.0043189
+            },
+            {
+                "name": "ING Groep NV",
+                "value": 0.0006642
+            },
+            {
+                "name": "Prosus NV Ordinary Shares - Class N",
+                "value": 0.0005988
+            },
+            {
+                "name": "Wolters Kluwer NV",
+                "value": 0.0004773
+            },
+            {
+                "name": "Adyen NV",
+                "value": 0.0004257
+            },
+            {
+                "name": "ASM International NV",
+                "value": 0.0003784
+            },
+            {
+                "name": "Koninklijke Ahold Delhaize NV",
+                "value": 0.0003581
+            }
+        ]
+    },
+    {
+        "name": "Saudi Arabia",
+        "data": [
+            {
+                "name": "Al Rajhi Bank",
+                "value": 0.0005256
+            },
+            {
+                "name": "Saudi Arabian Oil Co",
+                "value": 0.0003886
+            }
+        ]
+    },
+    {
+        "name": "Singapore",
+        "data": [
+            {
+                "name": "DBS Group Holdings Ltd",
+                "value": 0.0006391
+            },
+            {
+                "name": "Oversea-Chinese Banking Corp Ltd",
+                "value": 0.000456
+            }
+        ]
+    },
+    {
+        "name": "South Africa",
+        "data": [
+            {
+                "name": "Naspers Ltd Class N",
+                "value": 0.0004156
+            }
+        ]
+    },
+    {
+        "name": "South Korea",
+        "data": [
+            {
+                "name": "Samsung Electronics Co Ltd",
+                "value": 0.0034187
+            },
+            {
+                "name": "SK Hynix Inc",
+                "value": 0.0009105
+            },
+            {
+                "name": "Samsung Electronics Co Ltd Participating Preferred",
+                "value": 0.0005004
+            }
+        ]
+    },
+    {
+        "name": "Spain",
+        "data": [
+            {
+                "name": "Iberdrola SA",
+                "value": 0.0009338
+            },
+            {
+                "name": "Banco Santander SA",
+                "value": 0.0008816
+            },
+            {
+                "name": "Banco Bilbao Vizcaya Argentaria SA",
+                "value": 0.0007102
+            },
+            {
+                "name": "Industria De Diseno Textil SA Share From Split",
+                "value": 0.0006008
+            }
+        ]
+    },
+    {
+        "name": "Sweden",
+        "data": [
+            {
+                "name": "Spotify Technology SA",
+                "value": 0.0005867
+            },
+            {
+                "name": "Atlas Copco AB Class A",
+                "value": 0.0005742
+            },
+            {
+                "name": "Volvo AB Class B",
+                "value": 0.0004596
+            },
+            {
+                "name": "Investor AB Class B",
+                "value": 0.000457
+            },
+            {
+                "name": "Assa Abloy AB Class B",
+                "value": 0.000352
+            }
+        ]
+    },
+    {
+        "name": "Switzerland",
+        "data": [
+            {
+                "name": "Nestle SA",
+                "value": 0.0031216
+            },
+            {
+                "name": "Novartis AG Registered Shares",
+                "value": 0.0026757
+            },
+            {
+                "name": "Roche Holding AG",
+                "value": 0.0022828
+            },
+            {
+                "name": "UBS Group AG",
+                "value": 0.0011456
+            },
+            {
+                "name": "ABB Ltd",
+                "value": 0.001032
+            },
+            {
+                "name": "Compagnie Financiere Richemont SA Class A",
+                "value": 0.0009546
+            },
+            {
+                "name": "Zurich Insurance Group AG",
+                "value": 0.0009289
+            },
+            {
+                "name": "Holcim Ltd",
+                "value": 0.0006158
+            },
+            {
+                "name": "Lonza Group Ltd",
+                "value": 0.0005692
+            },
+            {
+                "name": "Alcon Inc",
+                "value": 0.0005486
+            },
+            {
+                "name": "Sika AG",
+                "value": 0.0005448
+            },
+            {
+                "name": "Roche Holding AG Bearer Shares",
+                "value": 0.0004801
+            },
+            {
+                "name": "Givaudan SA",
+                "value": 0.0004642
+            },
+            {
+                "name": "Swiss Re AG",
+                "value": 0.0004183
+            },
+            {
+                "name": "Partners Group Holding AG",
+                "value": 0.0003519
+            }
+        ]
+    },
+    {
+        "name": "Taiwan",
+        "data": [
+            {
+                "name": "Taiwan Semiconductor Manufacturing Co Ltd",
+                "value": 0.0082572
+            },
+            {
+                "name": "Hon Hai Precision Industry Co Ltd",
+                "value": 0.0008619
+            },
+            {
+                "name": "MediaTek Inc",
+                "value": 0.0006583
+            }
+        ]
+    },
+    {
+        "name": "United Kingdom",
+        "data": [
+            {
+                "name": "AstraZeneca PLC",
+                "value": 0.0028042
+            },
+            {
+                "name": "Shell PLC",
+                "value": 0.0027399
+            },
+            {
+                "name": "HSBC Holdings PLC",
+                "value": 0.0020077
+            },
+            {
+                "name": "Unilever PLC",
+                "value": 0.0017746
+            },
+            {
+                "name": "BP PLC",
+                "value": 0.0011733
+            },
+            {
+                "name": "RELX PLC",
+                "value": 0.0010362
+            },
+            {
+                "name": "GSK PLC",
+                "value": 0.0009123
+            },
+            {
+                "name": "British American Tobacco PLC",
+                "value": 0.0008344
+            },
+            {
+                "name": "Rio Tinto PLC Registered Shares",
+                "value": 0.0008154
+            },
+            {
+                "name": "Diageo PLC",
+                "value": 0.0008138
+            },
+            {
+                "name": "Glencore PLC",
+                "value": 0.0007958
+            },
+            {
+                "name": "National Grid PLC",
+                "value": 0.0007187
+            },
+            {
+                "name": "London Stock Exchange Group PLC",
+                "value": 0.0007089
+            },
+            {
+                "name": "Compass Group PLC",
+                "value": 0.0006175
+            },
+            {
+                "name": "BAE Systems PLC",
+                "value": 0.0005971
+            },
+            {
+                "name": "Rolls-Royce Holdings PLC",
+                "value": 0.0005735
+            },
+            {
+                "name": "Lloyds Banking Group PLC",
+                "value": 0.0005726
+            },
+            {
+                "name": "Barclays PLC",
+                "value": 0.0005291
+            },
+            {
+                "name": "Experian PLC",
+                "value": 0.0005126
+            },
+            {
+                "name": "Reckitt Benckiser Group PLC",
+                "value": 0.0004487
+            },
+            {
+                "name": "Anglo American PLC",
+                "value": 0.0004449
+            },
+            {
+                "name": "Flutter Entertainment PLC",
+                "value": 0.0004128
+            },
+            {
+                "name": "Ashtead Group PLC",
+                "value": 0.0003728
+            },
+            {
+                "name": "Haleon PLC",
+                "value": 0.0003686
+            },
+            {
+                "name": "Tesco PLC",
+                "value": 0.0003557
+            }
+        ]
+    },
+    {
+        "name": "United States",
+        "data": [
+            {
+                "name": "Apple Inc",
+                "value": 0.0380123
+            },
+            {
+                "name": "Microsoft Corp",
+                "value": 0.0366328
+            },
+            {
+                "name": "NVIDIA Corp",
+                "value": 0.0327686
+            },
+            {
+                "name": "Amazon.com Inc",
+                "value": 0.0204517
+            },
+            {
+                "name": "Meta Platforms Inc Class A",
+                "value": 0.01225
+            },
+            {
+                "name": "Alphabet Inc Class A",
+                "value": 0.0119404
+            },
+            {
+                "name": "Alphabet Inc Class C",
+                "value": 0.0099734
+            },
+            {
+                "name": "Broadcom Inc",
+                "value": 0.0086028
+            },
+            {
+                "name": "Eli Lilly and Co",
+                "value": 0.0080544
+            },
+            {
+                "name": "Berkshire Hathaway Inc Class B",
+                "value": 0.007997
+            },
+            {
+                "name": "Tesla Inc",
+                "value": 0.0075945
+            },
+            {
+                "name": "JPMorgan Chase & Co",
+                "value": 0.0071779
+            },
+            {
+                "name": "Exxon Mobil Corp",
+                "value": 0.0062562
+            },
+            {
+                "name": "UnitedHealth Group Inc",
+                "value": 0.0062139
+            },
+            {
+                "name": "Visa Inc Class A",
+                "value": 0.0049016
+            },
+            {
+                "name": "Mastercard Inc Class A",
+                "value": 0.0044881
+            },
+            {
+                "name": "Johnson & Johnson",
+                "value": 0.0044809
+            },
+            {
+                "name": "Procter & Gamble Co",
+                "value": 0.0044552
+            },
+            {
+                "name": "Costco Wholesale Corp",
+                "value": 0.0042877
+            },
+            {
+                "name": "The Home Depot Inc",
+                "value": 0.0042783
+            },
+            {
+                "name": "AbbVie Inc",
+                "value": 0.0038629
+            },
+            {
+                "name": "Walmart Inc",
+                "value": 0.0035037
+            },
+            {
+                "name": "Merck & Co Inc",
+                "value": 0.0033755
+            },
+            {
+                "name": "Chevron Corp",
+                "value": 0.0032501
+            },
+            {
+                "name": "Bank of America Corp",
+                "value": 0.0032064
+            },
+            {
+                "name": "Netflix Inc",
+                "value": 0.0031651
+            },
+            {
+                "name": "Coca-Cola Co",
+                "value": 0.0030423
+            },
+            {
+                "name": "Adobe Inc",
+                "value": 0.0029009
+            },
+            {
+                "name": "Salesforce Inc",
+                "value": 0.0028574
+            },
+            {
+                "name": "PepsiCo Inc",
+                "value": 0.0027772
+            },
+            {
+                "name": "Thermo Fisher Scientific Inc",
+                "value": 0.0027465
+            },
+            {
+                "name": "Advanced Micro Devices Inc",
+                "value": 0.0027387
+            },
+            {
+                "name": "Oracle Corp",
+                "value": 0.002579
+            },
+            {
+                "name": "Linde PLC",
+                "value": 0.0025559
+            },
+            {
+                "name": "Wells Fargo & Co",
+                "value": 0.0024459
+            },
+            {
+                "name": "Accenture PLC Class A",
+                "value": 0.0024332
+            },
+            {
+                "name": "Qualcomm Inc",
+                "value": 0.002379
+            },
+            {
+                "name": "Cisco Systems Inc",
+                "value": 0.0023082
+            },
+            {
+                "name": "McDonald's Corp",
+                "value": 0.0022383
+            },
+            {
+                "name": "Texas Instruments Inc",
+                "value": 0.0021837
+            },
+            {
+                "name": "GE Aerospace",
+                "value": 0.0021793
+            },
+            {
+                "name": "Danaher Corp",
+                "value": 0.0021571
+            },
+            {
+                "name": "Abbott Laboratories",
+                "value": 0.0021557
+            },
+            {
+                "name": "Philip Morris International Inc",
+                "value": 0.0021056
+            },
+            {
+                "name": "Amgen Inc",
+                "value": 0.002097
+            },
+            {
+                "name": "Intuit Inc",
+                "value": 0.0020811
+            },
+            {
+                "name": "Applied Materials Inc",
+                "value": 0.0020786
+            },
+            {
+                "name": "International Business Machines Corp",
+                "value": 0.002072
+            },
+            {
+                "name": "Pfizer Inc",
+                "value": 0.0020379
+            },
+            {
+                "name": "The Walt Disney Co",
+                "value": 0.0020247
+            },
+            {
+                "name": "Verizon Communications Inc",
+                "value": 0.002007
+            },
+            {
+                "name": "Caterpillar Inc",
+                "value": 0.0019917
+            },
+            {
+                "name": "ServiceNow Inc",
+                "value": 0.001969
+            },
+            {
+                "name": "The Goldman Sachs Group Inc",
+                "value": 0.0018867
+            },
+            {
+                "name": "Comcast Corp Class A",
+                "value": 0.0018859
+            },
+            {
+                "name": "NextEra Energy Inc",
+                "value": 0.0018485
+            },
+            {
+                "name": "Intuitive Surgical Inc",
+                "value": 0.0018481
+            },
+            {
+                "name": "RTX Corp",
+                "value": 0.0018363
+            },
+            {
+                "name": "S&P Global Inc",
+                "value": 0.0017778
+            },
+            {
+                "name": "Union Pacific Corp",
+                "value": 0.0017688
+            },
+            {
+                "name": "American Express Co",
+                "value": 0.0016889
+            },
+            {
+                "name": "Lowe's Companies Inc",
+                "value": 0.0016499
+            },
+            {
+                "name": "AT&T Inc",
+                "value": 0.0016238
+            },
+            {
+                "name": "Honeywell International Inc",
+                "value": 0.001564
+            },
+            {
+                "name": "Intel Corp",
+                "value": 0.0015425
+            },
+            {
+                "name": "ConocoPhillips",
+                "value": 0.0015306
+            },
+            {
+                "name": "Uber Technologies Inc",
+                "value": 0.0015247
+            },
+            {
+                "name": "BlackRock Inc",
+                "value": 0.001516
+            },
+            {
+                "name": "Vertex Pharmaceuticals Inc",
+                "value": 0.0015055
+            },
+            {
+                "name": "TJX Companies Inc",
+                "value": 0.001505
+            },
+            {
+                "name": "Booking Holdings Inc",
+                "value": 0.0014901
+            },
+            {
+                "name": "Progressive Corp",
+                "value": 0.0014724
+            },
+            {
+                "name": "Citigroup Inc",
+                "value": 0.0014607
+            },
+            {
+                "name": "Elevance Health Inc",
+                "value": 0.0014556
+            },
+            {
+                "name": "Berkshire Hathaway Inc Class A",
+                "value": 0.0014392
+            },
+            {
+                "name": "Eaton Corp PLC",
+                "value": 0.001429
+            },
+            {
+                "name": "Micron Technology Inc",
+                "value": 0.0014252
+            },
+            {
+                "name": "Lam Research Corp",
+                "value": 0.0014144
+            },
+            {
+                "name": "Morgan Stanley",
+                "value": 0.0014088
+            },
+            {
+                "name": "Stryker Corp",
+                "value": 0.0013932
+            },
+            {
+                "name": "Prologis Inc",
+                "value": 0.0013699
+            },
+            {
+                "name": "Lockheed Martin Corp",
+                "value": 0.0013562
+            },
+            {
+                "name": "Analog Devices Inc",
+                "value": 0.0013498
+            },
+            {
+                "name": "Regeneron Pharmaceuticals Inc",
+                "value": 0.0013235
+            },
+            {
+                "name": "Chubb Ltd",
+                "value": 0.0013095
+            },
+            {
+                "name": "Boeing Co",
+                "value": 0.001304
+            },
+            {
+                "name": "KLA Corp",
+                "value": 0.0013034
+            },
+            {
+                "name": "Marsh & McLennan Companies Inc",
+                "value": 0.001287
+            },
+            {
+                "name": "Boston Scientific Corp",
+                "value": 0.0012745
+            },
+            {
+                "name": "Automatic Data Processing Inc",
+                "value": 0.0012638
+            },
+            {
+                "name": "Medtronic PLC",
+                "value": 0.0012547
+            },
+            {
+                "name": "American Tower Corp",
+                "value": 0.0012104
+            },
+            {
+                "name": "Blackstone Inc",
+                "value": 0.0011929
+            },
+            {
+                "name": "Palo Alto Networks Inc",
+                "value": 0.0011749
+            },
+            {
+                "name": "The Cigna Group",
+                "value": 0.0011443
+            },
+            {
+                "name": "Charles Schwab Corp",
+                "value": 0.0011439
+            },
+            {
+                "name": "Bristol-Myers Squibb Co",
+                "value": 0.0011325
+            },
+            {
+                "name": "Fiserv Inc",
+                "value": 0.0011204
+            },
+            {
+                "name": "Gilead Sciences Inc",
+                "value": 0.0011197
+            },
+            {
+                "name": "Deere & Co",
+                "value": 0.0011118
+            },
+            {
+                "name": "Mondelez International Inc Class A",
+                "value": 0.0010737
+            },
+            {
+                "name": "Southern Co",
+                "value": 0.0010702
+            },
+            {
+                "name": "Nike Inc Class B",
+                "value": 0.0010602
+            },
+            {
+                "name": "Arista Networks Inc",
+                "value": 0.0010489
+            },
+            {
+                "name": "Starbucks Corp",
+                "value": 0.00104
+            },
+            {
+                "name": "T-Mobile US Inc",
+                "value": 0.0010344
+            },
+            {
+                "name": "Intercontinental Exchange Inc",
+                "value": 0.0010095
+            },
+            {
+                "name": "Synopsys Inc",
+                "value": 0.0009999
+            },
+            {
+                "name": "Altria Group Inc",
+                "value": 0.0009878
+            },
+            {
+                "name": "Duke Energy Corp",
+                "value": 0.0009838
+            },
+            {
+                "name": "KKR & Co Inc Ordinary Shares",
+                "value": 0.0009774
+            },
+            {
+                "name": "Zoetis Inc Class A",
+                "value": 0.0009682
+            },
+            {
+                "name": "Sherwin-Williams Co",
+                "value": 0.0009674
+            },
+            {
+                "name": "McKesson Corp",
+                "value": 0.0009547
+            },
+            {
+                "name": "General Dynamics Corp",
+                "value": 0.0009521
+            },
+            {
+                "name": "Waste Management Inc",
+                "value": 0.0009495
+            },
+            {
+                "name": "Colgate-Palmolive Co",
+                "value": 0.0009481
+            },
+            {
+                "name": "MercadoLibre Inc",
+                "value": 0.0009241
+            },
+            {
+                "name": "CVS Health Corp",
+                "value": 0.0008942
+            },
+            {
+                "name": "Trane Technologies PLC Class A",
+                "value": 0.0008902
+            },
+            {
+                "name": "Amphenol Corp Class A",
+                "value": 0.0008873
+            },
+            {
+                "name": "Equinix Inc",
+                "value": 0.0008789
+            },
+            {
+                "name": "Chipotle Mexican Grill Inc",
+                "value": 0.0008716
+            },
+            {
+                "name": "EOG Resources Inc",
+                "value": 0.0008602
+            },
+            {
+                "name": "Illinois Tool Works Inc",
+                "value": 0.0008599
+            },
+            {
+                "name": "Cadence Design Systems Inc",
+                "value": 0.000857
+            },
+            {
+                "name": "Moody's Corporation",
+                "value": 0.0008483
+            },
+            {
+                "name": "PNC Financial Services Group Inc",
+                "value": 0.0008439
+            },
+            {
+                "name": "Parker Hannifin Corp",
+                "value": 0.0008424
+            },
+            {
+                "name": "3M Co",
+                "value": 0.0008284
+            },
+            {
+                "name": "HCA Healthcare Inc",
+                "value": 0.0008262
+            },
+            {
+                "name": "TransDigm Group Inc",
+                "value": 0.0008258
+            },
+            {
+                "name": "U.S. Bancorp",
+                "value": 0.0008215
+            },
+            {
+                "name": "Becton Dickinson & Co",
+                "value": 0.0008191
+            },
+            {
+                "name": "CME Group Inc Class A",
+                "value": 0.0008177
+            },
+            {
+                "name": "Target Corp",
+                "value": 0.0008171
+            },
+            {
+                "name": "Schlumberger Ltd",
+                "value": 0.0008119
+            },
+            {
+                "name": "PayPal Holdings Inc",
+                "value": 0.000811
+            },
+            {
+                "name": "CSX Corp",
+                "value": 0.0008084
+            },
+            {
+                "name": "FedEx Corp",
+                "value": 0.0008045
+            },
+            {
+                "name": "Northrop Grumman Corp",
+                "value": 0.000795
+            },
+            {
+                "name": "NXP Semiconductors NV",
+                "value": 0.0007941
+            },
+            {
+                "name": "Emerson Electric Co",
+                "value": 0.000785
+            },
+            {
+                "name": "O'Reilly Automotive Inc",
+                "value": 0.000778
+            },
+            {
+                "name": "Cintas Corp",
+                "value": 0.0007725
+            },
+            {
+                "name": "Welltower Inc",
+                "value": 0.000772
+            },
+            {
+                "name": "Apollo Global Management Inc Class A",
+                "value": 0.0007718
+            },
+            {
+                "name": "Motorola Solutions Inc",
+                "value": 0.0007702
+            },
+            {
+                "name": "Freeport-McMoRan Inc",
+                "value": 0.0007637
+            },
+            {
+                "name": "Aon PLC Class A",
+                "value": 0.000759
+            },
+            {
+                "name": "Marathon Petroleum Corp",
+                "value": 0.0007353
+            },
+            {
+                "name": "Phillips 66",
+                "value": 0.000726
+            },
+            {
+                "name": "Airbnb Inc Ordinary Shares - Class A",
+                "value": 0.0007173
+            },
+            {
+                "name": "Arthur J. Gallagher & Co",
+                "value": 0.0007171
+            },
+            {
+                "name": "Constellation Energy Corp",
+                "value": 0.0007027
+            },
+            {
+                "name": "Truist Financial Corp",
+                "value": 0.0007
+            },
+            {
+                "name": "Air Products & Chemicals Inc",
+                "value": 0.0006881
+            },
+            {
+                "name": "CRH PLC",
+                "value": 0.000687
+            },
+            {
+                "name": "Roper Technologies Inc",
+                "value": 0.0006822
+            },
+            {
+                "name": "Marvell Technology Inc",
+                "value": 0.000675
+            },
+            {
+                "name": "Ecolab Inc",
+                "value": 0.0006747
+            },
+            {
+                "name": "Capital One Financial Corp",
+                "value": 0.0006729
+            },
+            {
+                "name": "Carrier Global Corp Ordinary Shares",
+                "value": 0.0006699
+            },
+            {
+                "name": "Norfolk Southern Corp",
+                "value": 0.0006647
+            },
+            {
+                "name": "Aflac Inc",
+                "value": 0.0006421
+            },
+            {
+                "name": "AutoZone Inc",
+                "value": 0.0006383
+            },
+            {
+                "name": "Palantir Technologies Inc Ordinary Shares - Class A",
+                "value": 0.0006369
+            },
+            {
+                "name": "D.R. Horton Inc",
+                "value": 0.0006303
+            },
+            {
+                "name": "American International Group Inc",
+                "value": 0.0006285
+            },
+            {
+                "name": "Marriott International Inc Class A",
+                "value": 0.0006281
+            },
+            {
+                "name": "Autodesk Inc",
+                "value": 0.0006277
+            },
+            {
+                "name": "Valero Energy Corp",
+                "value": 0.000622
+            },
+            {
+                "name": "Hilton Worldwide Holdings Inc",
+                "value": 0.0006212
+            },
+            {
+                "name": "Williams Companies Inc",
+                "value": 0.0006178
+            },
+            {
+                "name": "American Electric Power Co Inc",
+                "value": 0.0006036
+            },
+            {
+                "name": "PACCAR Inc",
+                "value": 0.000595
+            },
+            {
+                "name": "CrowdStrike Holdings Inc Class A",
+                "value": 0.0005949
+            },
+            {
+                "name": "United Rentals Inc",
+                "value": 0.0005943
+            },
+            {
+                "name": "Sempra",
+                "value": 0.0005927
+            },
+            {
+                "name": "General Motors Co",
+                "value": 0.0005913
+            },
+            {
+                "name": "Simon Property Group Inc",
+                "value": 0.0005809
+            },
+            {
+                "name": "The Travelers Companies Inc",
+                "value": 0.0005791
+            },
+            {
+                "name": "Realty Income Corp",
+                "value": 0.0005783
+            },
+            {
+                "name": "GE Vernova Inc",
+                "value": 0.0005716
+            },
+            {
+                "name": "Bank of New York Mellon Corp",
+                "value": 0.0005709
+            },
+            {
+                "name": "Johnson Controls International PLC",
+                "value": 0.0005702
+            },
+            {
+                "name": "ONEOK Inc",
+                "value": 0.0005681
+            },
+            {
+                "name": "Digital Realty Trust Inc",
+                "value": 0.000567
+            },
+            {
+                "name": "Workday Inc Class A",
+                "value": 0.0005648
+            },
+            {
+                "name": "TE Connectivity Ltd",
+                "value": 0.0005626
+            },
+            {
+                "name": "Crown Castle Inc",
+                "value": 0.0005604
+            },
+            {
+                "name": "Microchip Technology Inc",
+                "value": 0.000557
+            },
+            {
+                "name": "Ross Stores Inc",
+                "value": 0.000556
+            },
+            {
+                "name": "Public Storage",
+                "value": 0.0005472
+            },
+            {
+                "name": "MetLife Inc",
+                "value": 0.0005394
+            },
+            {
+                "name": "Waste Connections Inc",
+                "value": 0.0005384
+            },
+            {
+                "name": "Copart Inc",
+                "value": 0.0005355
+            },
+            {
+                "name": "Kimberly-Clark Corp",
+                "value": 0.0005299
+            },
+            {
+                "name": "Allstate Corp",
+                "value": 0.0005274
+            },
+            {
+                "name": "Prudential Financial Inc",
+                "value": 0.0005268
+            },
+            {
+                "name": "IQVIA Holdings Inc",
+                "value": 0.0005267
+            },
+            {
+                "name": "Newmont Corp",
+                "value": 0.0005264
+            },
+            {
+                "name": "Dominion Energy Inc",
+                "value": 0.0005261
+            },
+            {
+                "name": "Coinbase Global Inc Ordinary Shares - Class A",
+                "value": 0.0005211
+            },
+            {
+                "name": "Humana Inc",
+                "value": 0.0005151
+            },
+            {
+                "name": "Fidelity National Information Services Inc",
+                "value": 0.0005111
+            },
+            {
+                "name": "Ameriprise Financial Inc",
+                "value": 0.000508
+            },
+            {
+                "name": "L3Harris Technologies Inc",
+                "value": 0.0005044
+            },
+            {
+                "name": "Hess Corp",
+                "value": 0.0005039
+            },
+            {
+                "name": "Lennar Corp Class A",
+                "value": 0.0005026
+            },
+            {
+                "name": "W.W. Grainger Inc",
+                "value": 0.0005022
+            },
+            {
+                "name": "Ford Motor Co",
+                "value": 0.0004991
+            },
+            {
+                "name": "Cheniere Energy Inc",
+                "value": 0.0004956
+            },
+            {
+                "name": "Old Dominion Freight Line Inc Ordinary Shares",
+                "value": 0.0004911
+            },
+            {
+                "name": "Agilent Technologies Inc",
+                "value": 0.000491
+            },
+            {
+                "name": "MSCI Inc",
+                "value": 0.0004883
+            },
+            {
+                "name": "Snowflake Inc Ordinary Shares - Class A",
+                "value": 0.0004846
+            },
+            {
+                "name": "Kinder Morgan Inc Class P",
+                "value": 0.000483
+            },
+            {
+                "name": "Centene Corp",
+                "value": 0.0004829
+            },
+            {
+                "name": "Paychex Inc",
+                "value": 0.0004825
+            },
+            {
+                "name": "Ingersoll Rand Inc",
+                "value": 0.0004795
+            },
+            {
+                "name": "Monolithic Power Systems Inc",
+                "value": 0.000477
+            },
+            {
+                "name": "Electronic Arts Inc",
+                "value": 0.0004764
+            },
+            {
+                "name": "Fastenal Co",
+                "value": 0.0004742
+            },
+            {
+                "name": "Cencora Inc",
+                "value": 0.000471
+            },
+            {
+                "name": "The Trade Desk Inc Class A",
+                "value": 0.0004686
+            },
+            {
+                "name": "AMETEK Inc",
+                "value": 0.0004683
+            },
+            {
+                "name": "Cummins Inc",
+                "value": 0.0004671
+            },
+            {
+                "name": "Corteva Inc",
+                "value": 0.0004638
+            },
+            {
+                "name": "Public Service Enterprise Group Inc",
+                "value": 0.0004637
+            },
+            {
+                "name": "Baker Hughes Co Class A",
+                "value": 0.0004626
+            },
+            {
+                "name": "Constellation Brands Inc Class A",
+                "value": 0.0004626
+            },
+            {
+                "name": "Republic Services Inc",
+                "value": 0.0004618
+            },
+            {
+                "name": "Occidental Petroleum Corp",
+                "value": 0.0004607
+            },
+            {
+                "name": "IDEXX Laboratories Inc",
+                "value": 0.0004596
+            },
+            {
+                "name": "Nucor Corp",
+                "value": 0.0004595
+            },
+            {
+                "name": "PG&E Corp",
+                "value": 0.0004578
+            },
+            {
+                "name": "Monster Beverage Corp",
+                "value": 0.0004567
+            },
+            {
+                "name": "Howmet Aerospace Inc",
+                "value": 0.0004553
+            },
+            {
+                "name": "Moderna Inc",
+                "value": 0.0004536
+            },
+            {
+                "name": "Fair Isaac Corp",
+                "value": 0.0004536
+            },
+            {
+                "name": "Quanta Services Inc",
+                "value": 0.0004528
+            },
+            {
+                "name": "Dow Inc",
+                "value": 0.0004521
+            },
+            {
+                "name": "DoorDash Inc Ordinary Shares - Class A",
+                "value": 0.0004504
+            },
+            {
+                "name": "Otis Worldwide Corp Ordinary Shares",
+                "value": 0.0004498
+            },
+            {
+                "name": "General Mills Inc",
+                "value": 0.0004487
+            },
+            {
+                "name": "Sysco Corp",
+                "value": 0.000448
+            },
+            {
+                "name": "Cognizant Technology Solutions Corp Class A",
+                "value": 0.000448
+            },
+            {
+                "name": "Gartner Inc",
+                "value": 0.000447
+            },
+            {
+                "name": "Edwards Lifesciences Corp",
+                "value": 0.0004443
+            },
+            {
+                "name": "Yum Brands Inc",
+                "value": 0.0004393
+            },
+            {
+                "name": "Verisk Analytics Inc",
+                "value": 0.0004365
+            },
+            {
+                "name": "Royal Caribbean Group",
+                "value": 0.0004364
+            },
+            {
+                "name": "Exelon Corp",
+                "value": 0.0004351
+            },
+            {
+                "name": "Martin Marietta Materials Inc",
+                "value": 0.0004342
+            },
+            {
+                "name": "Fortinet Inc",
+                "value": 0.0004327
+            },
+            {
+                "name": "Vulcan Materials Co",
+                "value": 0.0004301
+            },
+            {
+                "name": "Diamondback Energy Inc",
+                "value": 0.0004267
+            },
+            {
+                "name": "Discover Financial Services",
+                "value": 0.0004257
+            },
+            {
+                "name": "Keurig Dr Pepper Inc",
+                "value": 0.0004249
+            },
+            {
+                "name": "The Kroger Co",
+                "value": 0.0004231
+            },
+            {
+                "name": "Charter Communications Inc Class A",
+                "value": 0.0004231
+            },
+            {
+                "name": "GE HealthCare Technologies Inc Common Stock",
+                "value": 0.000423
+            },
+            {
+                "name": "DuPont de Nemours Inc",
+                "value": 0.0004148
+            },
+            {
+                "name": "HP Inc",
+                "value": 0.0004145
+            },
+            {
+                "name": "Datadog Inc Class A",
+                "value": 0.0004086
+            },
+            {
+                "name": "CBRE Group Inc Class A",
+                "value": 0.0004085
+            },
+            {
+                "name": "Super Micro Computer Inc",
+                "value": 0.0004082
+            },
+            {
+                "name": "Arch Capital Group Ltd",
+                "value": 0.0004058
+            },
+            {
+                "name": "Equifax Inc",
+                "value": 0.000404
+            },
+            {
+                "name": "Block Inc Class A",
+                "value": 0.0004031
+            },
+            {
+                "name": "ON Semiconductor Corp",
+                "value": 0.0003982
+            },
+            {
+                "name": "Extra Space Storage Inc",
+                "value": 0.0003943
+            },
+            {
+                "name": "The Hartford Financial Services Group Inc",
+                "value": 0.0003907
+            },
+            {
+                "name": "Consolidated Edison Inc",
+                "value": 0.0003894
+            },
+            {
+                "name": "Mettler-Toledo International Inc",
+                "value": 0.0003839
+            },
+            {
+                "name": "VICI Properties Inc Ordinary Shares",
+                "value": 0.0003796
+            },
+            {
+                "name": "Rockwell Automation Inc",
+                "value": 0.0003788
+            },
+            {
+                "name": "Xcel Energy Inc",
+                "value": 0.0003779
+            },
+            {
+                "name": "Xylem Inc",
+                "value": 0.0003774
+            },
+            {
+                "name": "CoStar Group Inc",
+                "value": 0.0003712
+            },
+            {
+                "name": "ResMed Inc",
+                "value": 0.000367
+            },
+            {
+                "name": "Lululemon Athletica Inc",
+                "value": 0.0003665
+            },
+            {
+                "name": "The Kraft Heinz Co",
+                "value": 0.0003643
+            },
+            {
+                "name": "Halliburton Co",
+                "value": 0.0003641
+            },
+            {
+                "name": "Biogen Inc",
+                "value": 0.0003639
+            },
+            {
+                "name": "Archer-Daniels Midland Co",
+                "value": 0.0003627
+            },
+            {
+                "name": "Corning Inc",
+                "value": 0.0003625
+            },
+            {
+                "name": "Targa Resources Corp",
+                "value": 0.0003576
+            },
+            {
+                "name": "Iron Mountain Inc",
+                "value": 0.0003572
+            },
+            {
+                "name": "Edison International",
+                "value": 0.0003554
+            },
+            {
+                "name": "Alnylam Pharmaceuticals Inc",
+                "value": 0.0003541
+            },
+            {
+                "name": "Devon Energy Corp",
+                "value": 0.0003531
+            },
+            {
+                "name": "PPG Industries Inc",
+                "value": 0.0003527
+            }
+        ]
+    }
+];
+
+        // Initialize the Highcharts packed bubble chart with the top 500 entries
+        Highcharts.chart('container', {
+            chart: {
+                type: 'packedbubble',
+                height: '100%',
+                animation: false, // Disable animations for performance
+                boost: {
+                    useGPUTranslations: true, // Use GPU for rendering
+                    seriesThreshold: 1, // Apply boost from the first series
+                }
+            },
+            title: {
+                text: 'Top 500 Company Weightings by Country'
+            },
+            legend: {
+                enabled: false // Disable the legend
+            },
+            tooltip: {
+                useHTML: true,
+                pointFormat: '<b>{point.name}:</b> {point.value}%'
+            },
+            plotOptions: {
+                packedbubble: {
+                    minSize: '10%',
+                    maxSize: '100%',
+                    zMin: 0,
+                    zMax: Math.max(...data.flatMap(series => series.data.map(point => point.value))),
+                    layoutAlgorithm: {
+                        gravitationalConstant: 0.05,
+                        splitSeries: false,
+                        seriesInteraction: true,
+                        dragBetweenSeries: false,
+                        parentNodeLimit: true,
+                        bubblePadding: 10 // Adjust padding to ensure fit on screen
+                    },
+                    dataLabels: {
+                        enabled: true,
+                        format: '{point.name}: {point.value:.2f}%',
+                        style: {
+                            color: 'black',
+                            textOutline: 'none',
+                            fontWeight: 'normal'
                         }
                     },
-                    title: {
-                        text: 'Company Weightings by Country'
-                    },
-                    legend: {
-                        enabled: false // Disable the legend
-                    },
-                    tooltip: {
-                        useHTML: true,
-                        pointFormat: '<b>{point.name}:</b> {point.value}'
-                    },
-                    plotOptions: {
-                        packedbubble: {
-                            minSize: '10%',
-                            maxSize: '100%',
-                            zMin: 0,
-                            zMax: Math.max(...data.flatMap(series => series.data.map(point => point.value))),
-                            layoutAlgorithm: {
-                                gravitationalConstant: 0.05,
-                                splitSeries: false,
-                                seriesInteraction: true,
-                                dragBetweenSeries: false,
-                                parentNodeLimit: true,
-                                bubblePadding: 10 // Adjust padding to ensure fit on screen
-                            },
-                            dataLabels: {
-                                enabled: true,
-                                format: '{point.name}',
-                                style: {
-                                    color: 'black',
-                                    textOutline: 'none',
-                                    fontWeight: 'normal'
-                                }
-                            },
-                            boostThreshold: 1 // Apply boost module to improve performance
-                        }
-                    },
-                    series: data
-                });
-            })
-            .catch(error => console.error('Error loading data:', error));
+                    boostThreshold: 1 // Apply boost module to improve performance
+                }
+            },
+            series: data
+        });
     </script>
 </body>
 </html>
