@@ -2175,7 +2175,7 @@
             },
             plotOptions: {
                 packedbubble: {
-                    minSize: '0%',
+                    minSize: '10%',
                     maxSize: '100%',
                     zMin: 0,
                     zMax: Math.max(...data.flatMap(series => series.data.map(point => point.value))),
@@ -2188,7 +2188,12 @@
                         bubblePadding: 10 // Adjust padding to ensure fit on screen
                     },
                     dataLabels: {
-                        enabled: false
+                        enabled: true,
+                        format: '{point.name}: {point.value:.2f}%',
+                        style: {
+                            color: 'black',
+                            textOutline: 'none',
+                            fontWeight: 'normal'
                         }
                     },
                     boostThreshold: 1 // Apply boost module to improve performance
