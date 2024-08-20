@@ -20,7 +20,7 @@
         fetch('data_with_weight.json')
             .then(response => response.json())
             .then(data => {
-                // Initialize the Highcharts chart with the fetched data
+                // Initialize the Highcharts packed bubble chart
                 Highcharts.chart('container', {
                     chart: {
                         type: 'packedbubble',
@@ -40,10 +40,10 @@
                             zMin: 0,
                             zMax: Math.max(...data.flatMap(series => series.data.map(point => point.value))),
                             layoutAlgorithm: {
-                                gravitationalConstant: 0.5,
-                                splitSeries: true,
-                                seriesInteraction: false,
-                                dragBetweenSeries: true,
+                                gravitationalConstant: 0.05,
+                                splitSeries: false, // Set to false for a traditional packed bubble chart
+                                seriesInteraction: true,
+                                dragBetweenSeries: false,
                                 parentNodeLimit: true
                             },
                             dataLabels: {
